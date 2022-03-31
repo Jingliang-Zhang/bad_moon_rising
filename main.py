@@ -449,7 +449,7 @@ def main():
     first_night_suggestion()
     print(g_players_table)
 
-    # generate_game()
+    generate_game()
 
 
 if __name__ == '__main__':
