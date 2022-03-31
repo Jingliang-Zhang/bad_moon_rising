@@ -81,7 +81,7 @@ g_roles_repo_copy = copy.deepcopy(g_roles_repo)
 
 # g_must_have = ["WasherWoman", "Investigator", "Chef", "FortuneTeller", "Empath", "Drunk"]
 # g_must_have = ["Librarian", "Drunk"]
-g_must_have = ["WatchMaker", "Librarian", "Investigator", "WasherWoman", "Mathematician", "Drunk", "Baron", "Carrion"]
+g_must_have = ["WatchMaker", "Librarian", "Investigator", "WasherWoman", "Mathematician", "Drunk", "Poisoner", "Carrion"]
 
 camp_division = {
     5: [3, 0, 1, 1],
@@ -352,22 +352,41 @@ def suggest_role(role_name, ind):
         suggestion += suggest_role(fake_townsman.name, ind)
 
     elif role_name == "LittleDevil":
-        randon_seed1 = randint(0, len(g_roles_repo[Category.Townsman]) - 1)
-        randon_seed1_role = g_roles_repo[Category.Townsman][randon_seed1]
+        print("LittleDevil: available townsman: {}".format(g_roles_repo_copy[Category.Townsman]))
+        print("LittleDevil: available outsider: {}".format(g_roles_repo_copy[Category.Outsider]))
+        randon_seed1 = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
+        randon_seed1_role = g_roles_repo_copy[Category.Townsman][randon_seed1]
 
-        randon_seed2 = randint(0, len(g_roles_repo[Category.Townsman]) - 1)
+        randon_seed2 = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
         if randon_seed2 == randon_seed1:
-            randon_seed2 = randint(0, len(g_roles_repo[Category.Townsman]) - 1)
-        randon_seed2_role = g_roles_repo[Category.Townsman][randon_seed2]
+            randon_seed2 = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
+        randon_seed2_role = g_roles_repo_copy[Category.Townsman][randon_seed2]
 
-        randon_seed3 = randint(0, len(g_roles_repo[Category.Outsider]) - 1)
-        randon_seed3_role = g_roles_repo[Category.Outsider][randon_seed3]
+        randon_seed3 = randint(0, len(g_roles_repo_copy[Category.Outsider]) - 1)
+        randon_seed3_role = g_roles_repo_copy[Category.Outsider][randon_seed3]
         suggestion = "{randon_seed1_role} {randon_seed2_role} {randon_seed3_role}".format(
             randon_seed1_role=randon_seed1_role.c_name,
             randon_seed2_role=randon_seed2_role.c_name,
             randon_seed3_role=randon_seed3_role.c_name)
 
     elif role_name == "Carrion":
+        print("Carrion: available townsman: {}".format(g_roles_repo_copy[Category.Townsman]))
+        print("Carrion: available outsider: {}".format(g_roles_repo_copy[Category.Outsider]))
+        randon_seed1 = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
+        randon_seed1_role = g_roles_repo_copy[Category.Townsman][randon_seed1]
+
+        randon_seed2 = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
+        if randon_seed2 == randon_seed1:
+            randon_seed2 = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
+        randon_seed2_role = g_roles_repo_copy[Category.Townsman][randon_seed2]
+
+        randon_seed3 = randint(0, len(g_roles_repo_copy[Category.Outsider]) - 1)
+        randon_seed3_role = g_roles_repo_copy[Category.Outsider][randon_seed3]
+        suggestion = "{randon_seed1_role} {randon_seed2_role} {randon_seed3_role}".format(
+            randon_seed1_role=randon_seed1_role.c_name,
+            randon_seed2_role=randon_seed2_role.c_name,
+            randon_seed3_role=randon_seed3_role.c_name)
+
         left_townsman_idx = rows if ind == 1 else ind - 1
         right_townsman_idx = 1 if ind == rows else ind + 1
 
@@ -402,7 +421,7 @@ def suggest_role(role_name, ind):
 
             right_townsman_idx = 1 if right_townsman_idx == rows else right_townsman_idx + 1
 
-        suggestion = "{left_townsman_idx}和{right_townsman_idx}中毒了".format(
+        suggestion += "  {left_townsman_idx}和{right_townsman_idx}中毒了".format(
             left_townsman_idx=left_townsman_idx,
             right_townsman_idx=right_townsman_idx)
         g_players_table['First_Night_Suggestion'][
