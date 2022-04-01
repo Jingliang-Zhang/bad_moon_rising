@@ -50,6 +50,7 @@ g_roles_repo = {
         Role(name="WatchMaker", c_name="钟表匠", category=Category.Townsman, camp=Camp.Light),
         Role(name="Mathematician", c_name="数学家", category=Category.Townsman, camp=Camp.Light),
 
+        Role(name="Philosopher", c_name="哲学家", category=Category.Townsman, camp=Camp.Light),
     ],
 
     Category.Outsider: [
@@ -60,6 +61,8 @@ g_roles_repo = {
 
         Role(name="Fool", c_name="傻瓜", category=Category.Outsider, camp=Camp.Light),
         Role(name="Lover", c_name="心上人", category=Category.Outsider, camp=Camp.Light),
+
+        Role(name="Lunatic", c_name="疯子", category=Category.Underlings, camp=Camp.Dark),
     ],
 
     Category.Underlings: [
@@ -69,11 +72,17 @@ g_roles_repo = {
         Role(name="Baron", c_name="男爵", category=Category.Underlings, camp=Camp.Dark),
 
         Role(name="EvilTwin", c_name="邪恶双子", category=Category.Underlings, camp=Camp.Dark),
+
+        Role(name="EvilTwin", c_name="邪恶双子", category=Category.Underlings, camp=Camp.Dark),
+
+        Role(name="GodFather", c_name="教父", category=Category.Underlings, camp=Camp.Dark),
     ],
 
     Category.Devil: [
         Role(name="LittleDevil", c_name="小恶魔", category=Category.Devil, camp=Camp.Dark),
-        Role(name="Carrion", c_name="腐肢", category=Category.Devil, camp=Camp.Dark)
+        Role(name="Carrion", c_name="腐肢", category=Category.Devil, camp=Camp.Dark),
+
+        Role(name="Zombie", c_name="丧尸", category=Category.Underlings, camp=Camp.Dark),
     ]
 }
 
@@ -81,7 +90,7 @@ g_roles_repo_copy = copy.deepcopy(g_roles_repo)
 
 # g_must_have = ["WasherWoman", "Investigator", "Chef", "FortuneTeller", "Empath", "Drunk"]
 # g_must_have = ["Librarian", "Drunk"]
-g_must_have = ["WatchMaker", "Librarian", "Investigator", "WasherWoman", "Mathematician", "Drunk", "Poisoner", "Carrion"]
+g_must_have = ["Philosopher", "WatchMaker", "Librarian", "Investigator", "Mathematician", "Lunatic", "Drunk", "GodFather", "Zombie"]
 
 camp_division = {
     5: [3, 0, 1, 1],
@@ -109,6 +118,7 @@ def establish_roles_pool():
     global g_players_table
     global g_roles_repo
     global g_roles_repo_copy
+    global g_must_have
 
     # print(g_players_table)
     number_of_players = g_players_table.shape[0]
@@ -118,28 +128,41 @@ def establish_roles_pool():
     print(division)
 
     roles_repo = g_roles_repo_copy
-    select_roles_from_repo(Category.Townsman, division[0], roles_repo)
-    select_roles_from_repo(Category.Outsider, division[1], roles_repo)
     select_roles_from_repo(Category.Underlings, division[2], roles_repo)
-    select_roles_from_repo(Category.Devil, division[3], roles_repo)
-
     has_baron = False
     for ele in g_roles[Category.Underlings]:
         if ele.name == "Baron":
             has_baron = True
     if has_baron:
         print("Baron is selected, adjust role division, two more outsiders and two less townsman")
-        g_roles[Category.Townsman].pop(-1)
-        g_roles[Category.Townsman].pop(-1)
-        select_roles_from_repo(Category.Outsider, 2, roles_repo)
+        division[1] -= 2
+        division[0] += 2
 
-        print("Selected {}: {}".format(Category.Townsman, g_roles[Category.Townsman]))
-        print("Left {}: {}".format(Category.Townsman, roles_repo[Category.Townsman]))
-        print("Selected {}: {}".format(Category.Outsider, g_roles[Category.Outsider]))
-        print("Left {}: {}".format(Category.Outsider, roles_repo[Category.Outsider]))
+    has_godfather = False
+    for ele in g_roles[Category.Underlings]:
+        if ele.name == "GodFather":
+            has_godfather = True
+    if has_godfather:
+        plus = randint(0, 1)
+
+        if "Drunk" in g_must_have or "Lunatic" in g_must_have:
+            plus = 1
+
+        if plus == 0:
+            plus = -1
+            print("GodFather is selected, adjust role division, number of outsiders plus {}".format(plus))
+        else:
+            print("GodFather is selected, adjust role division, number of outsiders plus {}".format(plus))
+        division[1] += plus
+        division[0] -= plus
+
+    select_roles_from_repo(Category.Townsman, division[0], roles_repo)
+    select_roles_from_repo(Category.Outsider, division[1], roles_repo)
+    select_roles_from_repo(Category.Devil, division[3], roles_repo)
 
 
 def select_roles_from_repo(category, number, roles_repo):
+    print("Select roles from {}".format(category))
     global g_roles
     global g_must_have
     if g_roles.get(category) is None:
@@ -148,7 +171,7 @@ def select_roles_from_repo(category, number, roles_repo):
     # check must have
     for role_str in g_must_have:
         for role in roles_repo[category]:
-            if role.name == role_str:
+            if role.name == role_str and number > 0:
                 number = number - 1
 
                 g_roles[category].insert(-1, roles_repo[category].pop(roles_repo[category].index(role)))
@@ -159,9 +182,9 @@ def select_roles_from_repo(category, number, roles_repo):
 
         g_roles[category].insert(-1, roles_repo[category].pop(selected))
 
-    print("Selected {}: {}".format(category, g_roles[category]))
-    print("Left {}: {}".format(category, roles_repo[category]))
-    print("g_roles_repo {}: {}".format(category, g_roles_repo[category]))
+    print("     Selected {}: {}".format(category, g_roles[category]))
+    print("     Left {}: {}".format(category, roles_repo[category]))
+    # print("g_roles_repo {}: {}".format(category, g_roles_repo[category]))
 
 
 def dispatch_roles_to_players():
@@ -343,6 +366,17 @@ def suggest_role(role_name, ind):
         random_seed = randint(0, 3)
         suggestion = "醉酒或中毒： {}".format(random_seed)
 
+    elif role_name == "Philosopher":
+        suggestion = ""
+        suggestion += "【洗衣妇：{}】    ".format(suggest_role("WasherWoman", ind))
+        suggestion += "【图书管理员：{}】    ".format(suggest_role("Librarian", ind))
+        suggestion += "【调查员：{}】    ".format(suggest_role("Investigator", ind))
+        suggestion += "【厨师：{}】    ".format(suggest_role("Chef", ind))
+        suggestion += "【共情者：{}】    ".format(suggest_role("Empath", ind))
+        suggestion += "【占卜师：{}】    ".format(suggest_role("FortuneTeller", ind))
+        suggestion += "【钟表匠：{}】    ".format(suggest_role("WatchMaker", ind))
+        suggestion += "【数学家：{}】    ".format(suggest_role("Mathematician", ind))
+
     elif role_name == "Drunk":
         print("Drunk: available townsman: {}".format(g_roles_repo_copy[Category.Townsman]))
         fake_townsman_index = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
@@ -350,6 +384,36 @@ def suggest_role(role_name, ind):
         suggestion = "你是{}  ".format(fake_townsman.c_name)
 
         suggestion += suggest_role(fake_townsman.name, ind)
+
+    elif role_name == "Lunatic":
+        print("Lunatic: available devil: {}".format(g_roles_repo[Category.Devil]))
+        fake_devil_index = randint(0, len(g_roles_repo[Category.Devil]) - 1)
+        fake_devil_role = g_roles_repo[Category.Devil][fake_devil_index]
+        print("Lunatic: {}".format(fake_devil_role))
+        suggestion = "你的角色是{}    ".format(fake_devil_role.c_name)
+
+        print("Lunatic: available townsman: {}".format(g_roles_repo_copy[Category.Townsman]))
+        print("Lunatic: available outsider: {}".format(g_roles_repo_copy[Category.Outsider]))
+        randon_seed1 = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
+        randon_seed1_role = g_roles_repo_copy[Category.Townsman][randon_seed1]
+
+        randon_seed2 = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
+        if randon_seed2 == randon_seed1:
+            randon_seed2 = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
+        randon_seed2_role = g_roles_repo_copy[Category.Townsman][randon_seed2]
+
+        randon_seed3 = randint(0, len(g_roles_repo_copy[Category.Outsider]) - 1)
+        randon_seed3_role = g_roles_repo_copy[Category.Outsider][randon_seed3]
+        suggestion += "{randon_seed1_role} {randon_seed2_role} {randon_seed3_role}".format(
+            randon_seed1_role=randon_seed1_role.c_name,
+            randon_seed2_role=randon_seed2_role.c_name,
+            randon_seed3_role=randon_seed3_role.c_name)
+
+    elif role_name == "GodFather":
+        suggestion = ""
+        for an_index in g_players_table.index:
+            if is_category(g_players_table["Role"][an_index], Category.Outsider):
+                suggestion += "{} ".format(g_players_table["Role_Chinese"][an_index])
 
     elif role_name == "LittleDevil":
         print("LittleDevil: available townsman: {}".format(g_roles_repo_copy[Category.Townsman]))
@@ -426,6 +490,27 @@ def suggest_role(role_name, ind):
             right_townsman_idx=right_townsman_idx)
         g_players_table['First_Night_Suggestion'][
             ind] = suggestion
+
+    elif role_name == "Zombie":
+        print("Zombie: available townsman: {}".format(g_roles_repo_copy[Category.Townsman]))
+        print("Zombie: available outsider: {}".format(g_roles_repo_copy[Category.Outsider]))
+        randon_seed1 = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
+        randon_seed1_role = g_roles_repo_copy[Category.Townsman][randon_seed1]
+
+        randon_seed2 = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
+        if randon_seed2 == randon_seed1:
+            randon_seed2 = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
+        randon_seed2_role = g_roles_repo_copy[Category.Townsman][randon_seed2]
+
+        randon_seed3 = randint(0, len(g_roles_repo_copy[Category.Outsider]) - 1)
+        randon_seed3_role = g_roles_repo_copy[Category.Outsider][randon_seed3]
+        suggestion += "{randon_seed1_role} {randon_seed2_role} {randon_seed3_role}".format(
+            randon_seed1_role=randon_seed1_role.c_name,
+            randon_seed2_role=randon_seed2_role.c_name,
+            randon_seed3_role=randon_seed3_role.c_name)
+
+
+
 
     return suggestion
 
