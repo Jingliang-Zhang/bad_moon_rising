@@ -41,7 +41,7 @@ g_roles_repo = {
         Role(name="FortuneTeller", c_name="占卜师", category=Category.Townsman, camp=Camp.Light),
         Role(name="Undertaker", c_name="送葬者", category=Category.Townsman, camp=Camp.Light),
         Role(name="Monk", c_name="僧侣", category=Category.Townsman, camp=Camp.Light),
-        Role(name="RavenKeeper", c_name="渡鸦看守者", category=Category.Townsman, camp=Camp.Light),
+        # Role(name="RavenKeeper", c_name="渡鸦看守者", category=Category.Townsman, camp=Camp.Light),
         Role(name="Virgin", c_name="童真者", category=Category.Townsman, camp=Camp.Light),
         Role(name="Slayer", c_name="杀手", category=Category.Townsman, camp=Camp.Light),
         Role(name="Soldier", c_name="士兵", category=Category.Townsman, camp=Camp.Light),
@@ -54,9 +54,9 @@ g_roles_repo = {
     ],
 
     Category.Outsider: [
-        Role(name="Butler", c_name="管家", category=Category.Outsider, camp=Camp.Light),
+        # Role(name="Butler", c_name="管家", category=Category.Outsider, camp=Camp.Light),
         Role(name="Drunk", c_name="酒鬼", category=Category.Outsider, camp=Camp.Light),
-        Role(name="Recluse", c_name="隐士", category=Category.Outsider, camp=Camp.Light),
+        # Role(name="Recluse", c_name="隐士", category=Category.Outsider, camp=Camp.Light),
         Role(name="Saint", c_name="圣徒", category=Category.Outsider, camp=Camp.Light),
 
         Role(name="Fool", c_name="傻瓜", category=Category.Outsider, camp=Camp.Light),
@@ -71,9 +71,7 @@ g_roles_repo = {
         Role(name="ScarletWoman", c_name="荡妇", category=Category.Underlings, camp=Camp.Dark),
         Role(name="Baron", c_name="男爵", category=Category.Underlings, camp=Camp.Dark),
 
-        Role(name="EvilTwin", c_name="邪恶双子", category=Category.Underlings, camp=Camp.Dark),
-
-        Role(name="EvilTwin", c_name="邪恶双子", category=Category.Underlings, camp=Camp.Dark),
+        # Role(name="EvilTwin", c_name="邪恶双子", category=Category.Underlings, camp=Camp.Dark),
 
         Role(name="GodFather", c_name="教父", category=Category.Underlings, camp=Camp.Dark),
     ],
