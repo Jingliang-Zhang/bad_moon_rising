@@ -60,7 +60,7 @@ g_roles_repo = {
         Role(name="Saint", c_name="圣徒", category=Category.Outsider, camp=Camp.Light),
 
         Role(name="Fool", c_name="傻瓜", category=Category.Outsider, camp=Camp.Light),
-        Role(name="Lover", c_name="心上人", category=Category.Outsider, camp=Camp.Light),
+        # Role(name="Lover", c_name="心上人", category=Category.Outsider, camp=Camp.Light),
 
         Role(name="Lunatic", c_name="疯子", category=Category.Underlings, camp=Camp.Dark),
     ],
@@ -88,7 +88,7 @@ g_roles_repo_copy = copy.deepcopy(g_roles_repo)
 
 # g_must_have = ["WasherWoman", "Investigator", "Chef", "FortuneTeller", "Empath", "Drunk"]
 # g_must_have = ["Librarian", "Drunk"]
-g_must_have = ["Philosopher", "WatchMaker", "Librarian", "Investigator", "Mathematician", "Lunatic", "Drunk", "GodFather", "Zombie"]
+g_must_have = ["Philosopher", "Lunatic", "Drunk", "Baron", "Zombie"]
 
 camp_division = {
     5: [3, 0, 1, 1],
@@ -133,8 +133,8 @@ def establish_roles_pool():
             has_baron = True
     if has_baron:
         print("Baron is selected, adjust role division, two more outsiders and two less townsman")
-        division[1] -= 2
-        division[0] += 2
+        division[1] += 2
+        division[0] -= 2
 
     has_godfather = False
     for ele in g_roles[Category.Underlings]:
@@ -353,9 +353,10 @@ def suggest_role(role_name, ind):
                 if a_dist > distance:
                     distance = a_dist
 
-        random_distance = randint(0, g_players_table.shape[0] / 2 - 1)
+        print("WatchMaker: {}".format(g_players_table.shape[0] / 2 - 1))
+        random_distance = randint(0, int(g_players_table.shape[0] / 2 - 1))
         if random_distance == distance:
-            random_distance = randint(0, g_players_table.shape[0] / 2 - 1)
+            random_distance = randint(0, int(g_players_table.shape[0] / 2 - 1))
         suggestion = "正常状态： 间隔{}个玩家    " \
                      "醉酒或中毒： 间隔{}个玩家".format(distance, random_distance)
         g_players_table['First_Night_Suggestion'][ind] = suggestion
