@@ -36,14 +36,14 @@ class Role:
 
 g_roles_repo = {
     Category.Townsman: [
-        Role(name="WasherWoman", c_name="洗衣妇", category=Category.Townsman, camp=Camp.Light),
+        # Role(name="WasherWoman", c_name="洗衣妇", category=Category.Townsman, camp=Camp.Light),
         Role(name="Librarian", c_name="图书管理员", category=Category.Townsman, camp=Camp.Light),
-        # Role(name="Investigator", c_name="调查员", category=Category.Townsman, camp=Camp.Light),
+        Role(name="Investigator", c_name="调查员", category=Category.Townsman, camp=Camp.Light),
         # Role(name="Chef", c_name="厨师", category=Category.Townsman, camp=Camp.Light),
         Role(name="Empath", c_name="共情者", category=Category.Townsman, camp=Camp.Light),
-        Role(name="FortuneTeller", c_name="占卜师", category=Category.Townsman, camp=Camp.Light),
+        # Role(name="FortuneTeller", c_name="占卜师", category=Category.Townsman, camp=Camp.Light),
         Role(name="Undertaker", c_name="送葬者", category=Category.Townsman, camp=Camp.Light),
-        Role(name="Monk", c_name="僧侣", category=Category.Townsman, camp=Camp.Light),
+        # Role(name="Monk", c_name="僧侣", category=Category.Townsman, camp=Camp.Light),
         # Role(name="RavenKeeper", c_name="渡鸦看守者", category=Category.Townsman, camp=Camp.Light),
         Role(name="Virgin", c_name="童真者", category=Category.Townsman, camp=Camp.Light),
         Role(name="Slayer", c_name="杀手", category=Category.Townsman, camp=Camp.Light),
@@ -57,6 +57,10 @@ g_roles_repo = {
 
         Role(name="Artist", c_name="艺术家", category=Category.Townsman, camp=Camp.Light),
         Role(name="Gambler", c_name="赌徒", category=Category.Townsman, camp=Camp.Light),
+
+        Role(name="Engineer", c_name="工程师", category=Category.Townsman, camp=Camp.Light),
+        Role(name="Fool", c_name="弄臣", category=Category.Townsman, camp=Camp.Light),
+        Role(name="Courtier", c_name="侍臣", category=Category.Townsman, camp=Camp.Light),
     ],
 
     Category.Outsider: [
@@ -65,12 +69,12 @@ g_roles_repo = {
         # Role(name="Recluse", c_name="隐士", category=Category.Outsider, camp=Camp.Light),
         Role(name="Saint", c_name="圣徒", category=Category.Outsider, camp=Camp.Light),
 
-        Role(name="Fool", c_name="傻瓜", category=Category.Outsider, camp=Camp.Light),
-        # Role(name="Lover", c_name="心上人", category=Category.Outsider, camp=Camp.Light),
+        Role(name="Klutz", c_name="傻瓜", category=Category.Outsider, camp=Camp.Light),
+        Role(name="Lover", c_name="心上人", category=Category.Outsider, camp=Camp.Light),
 
         Role(name="Lunatic", c_name="疯子", category=Category.Outsider, camp=Camp.Dark),
 
-        Role(name="Heretic", c_name="异教徒", category=Category.Outsider, camp=Camp.Dark),
+        # Role(name="Heretic", c_name="异教徒", category=Category.Outsider, camp=Camp.Dark),
     ],
 
     Category.Underlings: [
@@ -80,19 +84,30 @@ g_roles_repo = {
         Role(name="Baron", c_name="男爵", category=Category.Underlings, camp=Camp.Dark),
 
         # Role(name="EvilTwin", c_name="邪恶双子", category=Category.Underlings, camp=Camp.Dark),
+        Role(name="Pit-Hag", c_name="熬药巫婆", category=Category.Underlings, camp=Camp.Dark),
 
         Role(name="GodFather", c_name="教父", category=Category.Underlings, camp=Camp.Dark),
 
-        Role(name="Marionette", c_name="牵线木偶", category=Category.Underlings, camp=Camp.Dark),
+        # Role(name="Marionette", c_name="牵线木偶", category=Category.Underlings, camp=Camp.Dark),
+
+        Role(name="Psychopath", c_name="神经病", category=Category.Underlings, camp=Camp.Dark),
+        Role(name="Mezepheles", c_name="灵言师", category=Category.Underlings, camp=Camp.Dark),
     ],
 
     Category.Devil: [
         Role(name="LittleDevil", c_name="小恶魔", category=Category.Devil, camp=Camp.Dark),
-        Role(name="Carrion", c_name="腐肢", category=Category.Devil, camp=Camp.Dark),
+        # Role(name="Carrion", c_name="腐肢", category=Category.Devil, camp=Camp.Dark),
 
-        Role(name="Zombie", c_name="丧尸", category=Category.Devil, camp=Camp.Dark),
+        # Role(name="Zombie", c_name="丧尸", category=Category.Devil, camp=Camp.Dark),
 
         Role(name="Pukka", c_name="纯血恶魔", category=Category.Devil, camp=Camp.Dark),
+
+        Role(name="Shabaloth", c_name="暴食者", category=Category.Devil, camp=Camp.Dark),
+        Role(name="Po", c_name="魄", category=Category.Devil, camp=Camp.Dark),
+
+        Role(name="Vigormortis", c_name="亡灵法师", category=Category.Devil, camp=Camp.Dark),
+        Role(name="FangGu", c_name="嗜梦游魂", category=Category.Devil, camp=Camp.Dark),
+
     ]
 }
 
@@ -100,7 +115,7 @@ g_roles_repo_copy = copy.deepcopy(g_roles_repo)
 
 # g_must_have = ["WasherWoman", "Investigator", "Chef", "FortuneTeller", "Empath", "Drunk"]
 # g_must_have = ["Librarian", "Drunk"]
-g_must_have = ["Artist", "Gambler", "Drunk", "Heretic", "Marionette", "Pukka"]
+g_must_have = ["Fool", "Courtier", "Engineer", "Artist", "Investigator", "ScarletWoman", "Pit-Hag", "FangGu"]
 
 camp_division = {
     5: [3, 0, 1, 1],
@@ -137,16 +152,22 @@ def establish_roles_pool():
 
     print(division)
 
+    number_of_townsman = division[0]
+    number_of_outsiders = division[1]
+    number_of_underlings = division[2]
+    number_of_devil = division[3]
+
     roles_repo = g_roles_repo_copy
-    select_roles_from_repo(Category.Underlings, division[2], roles_repo)
+    select_roles_from_repo(Category.Underlings, number_of_underlings, roles_repo)
+
     has_baron = False
     for ele in g_roles[Category.Underlings]:
         if ele.name == "Baron":
             has_baron = True
     if has_baron:
         print("Baron is selected, adjust role division, two more outsiders and two less townsman")
-        division[1] += 2
-        division[0] -= 2
+        number_of_outsiders += 2
+        number_of_townsman -= 2
 
     has_godfather = False
     for ele in g_roles[Category.Underlings]:
@@ -159,21 +180,45 @@ def establish_roles_pool():
             plus = 1
 
         if plus == 0:
-            plus = -1
-            print("GodFather is selected, adjust role division, number of outsiders plus {}".format(plus))
+            print("GodFather is selected, adjust role division, number of outsiders -1")
+            if number_of_outsiders > 0:
+                number_of_outsiders -= 1
+                number_of_townsman += 1
+            else:
+                print("GodFather is selected, number of outsiders is already zero, skip -1")
         else:
-            print("GodFather is selected, adjust role division, number of outsiders plus {}".format(plus))
-        division[1] += plus
-        division[0] -= plus
+            print("GodFather is selected, adjust role division, number of outsiders +1")
+            number_of_outsiders += 1
+            number_of_townsman -= 1
 
-        roles_repo[Category.Outsider].remove(
-            Role(name="Heretic", c_name="异教徒", category=Category.Outsider, camp=Camp.Dark))
-        print("GodFather is selected, remove Heretic from repo: {}".format(roles_repo[Category.Outsider]))
+        # roles_repo[Category.Outsider].remove(
+        #     Role(name="Heretic", c_name="异教徒", category=Category.Outsider, camp=Camp.Dark))
+        # print("GodFather is selected, remove Heretic from repo: {}".format(roles_repo[Category.Outsider]))
 
-    select_roles_from_repo(Category.Townsman, division[0], roles_repo)
-    select_roles_from_repo(Category.Outsider, division[1], roles_repo)
+    select_roles_from_repo(Category.Devil, number_of_devil, roles_repo)
+    has_vigormortis = False
+    for ele in g_roles[Category.Devil]:
+        if ele.name == "Vigormortis":
+            has_vigormortis = True
+    if has_vigormortis:
+        print("Vigormortis is selected, adjust role division, one less outsiders")
+        if number_of_outsiders > 0:
+            number_of_outsiders -= 1
+            number_of_townsman += 1
+        else:
+            print("Vigormortis is selected, number of outsiders is already zero, skip -1")
 
-    select_roles_from_repo(Category.Devil, division[3], roles_repo)
+    has_fanggu = False
+    for ele in g_roles[Category.Devil]:
+        if ele.name == "FangGu":
+            has_fanggu = True
+    if has_fanggu:
+        print("FangGu is selected, adjust role division, one more outsiders")
+        number_of_outsiders += 1
+        number_of_townsman -= 1
+
+    select_roles_from_repo(Category.Townsman, number_of_townsman, roles_repo)
+    select_roles_from_repo(Category.Outsider, number_of_outsiders, roles_repo)
 
 
 def select_roles_from_repo(category, number, roles_repo):
@@ -431,7 +476,7 @@ def suggest_role(role_name, ind):
             randon_seed2 = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
         randon_seed2_role = g_roles_repo_copy[Category.Townsman][randon_seed2]
 
-        randon_seed3 = randint(0, len(g_roles_repo_copy[Category.Outsider]) - 1)
+        randon_seed3 = randint(0, int(len(g_roles_repo_copy[Category.Outsider])) - 1)
         randon_seed3_role = g_roles_repo_copy[Category.Outsider][randon_seed3]
         suggestion += "{randon_seed1_role} {randon_seed2_role} {randon_seed3_role}".format(
             randon_seed1_role=randon_seed1_role.c_name,
@@ -524,7 +569,7 @@ def dummy(role_name, g_roles_repo_copy):
     if randon_seed2 == randon_seed1:
         randon_seed2 = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
     randon_seed2_role = g_roles_repo_copy[Category.Townsman][randon_seed2]
-    randon_seed3 = randint(0, len(g_roles_repo_copy[Category.Outsider]) - 1)
+    randon_seed3 = randint(0, int(len(g_roles_repo_copy[Category.Outsider])) - 1)
     randon_seed3_role = g_roles_repo_copy[Category.Outsider][randon_seed3]
     suggestion = "{randon_seed1_role} {randon_seed2_role} {randon_seed3_role}".format(
         randon_seed1_role=randon_seed1_role.c_name,
