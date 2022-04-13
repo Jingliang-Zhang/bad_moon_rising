@@ -92,6 +92,7 @@ g_roles_repo = {
 
         Role(name="Psychopath", c_name="神经病", category=Category.Underlings, camp=Camp.Dark),
         Role(name="Mezepheles", c_name="灵言师", category=Category.Underlings, camp=Camp.Dark),
+        Role(name="Witch", c_name="巫师", category=Category.Underlings, camp=Camp.Dark),
     ],
 
     Category.Devil: [
@@ -115,7 +116,7 @@ g_roles_repo_copy = copy.deepcopy(g_roles_repo)
 
 # g_must_have = ["WasherWoman", "Investigator", "Chef", "FortuneTeller", "Empath", "Drunk"]
 # g_must_have = ["Librarian", "Drunk"]
-g_must_have = ["Fool", "Courtier", "Engineer", "Artist", "Investigator", "ScarletWoman", "Pit-Hag", "FangGu"]
+g_must_have = ["Fool", "Courtier", "Engineer", "Artist", "Investigator", "Witch", "Pit-Hag", "FangGu"]
 
 camp_division = {
     5: [3, 0, 1, 1],
