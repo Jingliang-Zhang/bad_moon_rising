@@ -116,7 +116,7 @@ g_roles_repo_copy = copy.deepcopy(g_roles_repo)
 
 # g_must_have = ["WasherWoman", "Investigator", "Chef", "FortuneTeller", "Empath", "Drunk"]
 # g_must_have = ["Librarian", "Drunk"]
-g_must_have = ["Fool", "Courtier", "Engineer", "Artist", "Investigator", "Witch", "Pit-Hag", "FangGu"]
+g_must_have = ["Witch", "Pit-Hag", "FangGu"]
 
 camp_division = {
     5: [3, 0, 1, 1],
@@ -548,6 +548,26 @@ def suggest_role(role_name, ind):
         suggestion += find_underlings(g_players_table, g_roles_repo)
 
     elif role_name == "Pukka":
+        suggestion = "{} ".format(g_players_table["Role_Chinese"][ind])
+        suggestion += dummy(role_name, g_roles_repo_copy)
+        suggestion += find_underlings(g_players_table, g_roles_repo)
+
+    elif role_name == "Shabaloth":
+        suggestion = "{} ".format(g_players_table["Role_Chinese"][ind])
+        suggestion += dummy(role_name, g_roles_repo_copy)
+        suggestion += find_underlings(g_players_table, g_roles_repo)
+
+    elif role_name == "Po":
+        suggestion = "{} ".format(g_players_table["Role_Chinese"][ind])
+        suggestion += dummy(role_name, g_roles_repo_copy)
+        suggestion += find_underlings(g_players_table, g_roles_repo)
+
+    elif role_name == "Vigormortis":
+        suggestion = "{} ".format(g_players_table["Role_Chinese"][ind])
+        suggestion += dummy(role_name, g_roles_repo_copy)
+        suggestion += find_underlings(g_players_table, g_roles_repo)
+
+    elif role_name == "FangGu":
         suggestion = "{} ".format(g_players_table["Role_Chinese"][ind])
         suggestion += dummy(role_name, g_roles_repo_copy)
         suggestion += find_underlings(g_players_table, g_roles_repo)
