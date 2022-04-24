@@ -47,11 +47,11 @@ g_roles_repo = {
         # Role(name="RavenKeeper", c_name="渡鸦看守者", category=Category.Townsman, camp=Camp.Light),
         Role(name="Virgin", c_name="童真者", category=Category.Townsman, camp=Camp.Light),
         Role(name="Slayer", c_name="杀手", category=Category.Townsman, camp=Camp.Light),
-        # Role(name="Soldier", c_name="士兵", category=Category.Townsman, camp=Camp.Light),
-        Role(name="Mayor", c_name="市长", category=Category.Townsman, camp=Camp.Light),
+        Role(name="Soldier", c_name="士兵", category=Category.Townsman, camp=Camp.Light),
+        # Role(name="Mayor", c_name="市长", category=Category.Townsman, camp=Camp.Light),
 
         Role(name="WatchMaker", c_name="钟表匠", category=Category.Townsman, camp=Camp.Light),
-        Role(name="Mathematician", c_name="数学家", category=Category.Townsman, camp=Camp.Light),
+        # Role(name="Mathematician", c_name="数学家", category=Category.Townsman, camp=Camp.Light),
 
         Role(name="Philosopher", c_name="哲学家", category=Category.Townsman, camp=Camp.Light),
 
@@ -61,6 +61,11 @@ g_roles_repo = {
         Role(name="Engineer", c_name="工程师", category=Category.Townsman, camp=Camp.Light),
         Role(name="Fool", c_name="弄臣", category=Category.Townsman, camp=Camp.Light),
         Role(name="Courtier", c_name="侍臣", category=Category.Townsman, camp=Camp.Light),
+        Role(name="TeaLady", c_name="茶女", category=Category.Townsman, camp=Camp.Light),
+        Role(name="Professor", c_name="教授", category=Category.Townsman, camp=Camp.Light),
+
+        Role(name="Farmer", c_name="农民", category=Category.Townsman, camp=Camp.Light),
+        Role(name="Magician", c_name="魔术师", category=Category.Townsman, camp=Camp.Light),
     ],
 
     Category.Outsider: [
@@ -72,9 +77,11 @@ g_roles_repo = {
         Role(name="Klutz", c_name="傻瓜", category=Category.Outsider, camp=Camp.Light),
         Role(name="Lover", c_name="心上人", category=Category.Outsider, camp=Camp.Light),
 
-        Role(name="Lunatic", c_name="疯子", category=Category.Outsider, camp=Camp.Dark),
+        Role(name="Lunatic", c_name="疯子", category=Category.Outsider, camp=Camp.Light),
 
-        # Role(name="Heretic", c_name="异教徒", category=Category.Outsider, camp=Camp.Dark),
+        # Role(name="Heretic", c_name="异教徒", category=Category.Outsider, camp=Camp.Light),
+
+        Role(name="Snitcher", c_name="二五仔", category=Category.Outsider, camp=Camp.Light)
     ],
 
     Category.Underlings: [
@@ -97,7 +104,7 @@ g_roles_repo = {
 
     Category.Devil: [
         Role(name="LittleDevil", c_name="小恶魔", category=Category.Devil, camp=Camp.Dark),
-        # Role(name="Carrion", c_name="腐肢", category=Category.Devil, camp=Camp.Dark),
+        Role(name="Carrion", c_name="腐肢", category=Category.Devil, camp=Camp.Dark),
 
         # Role(name="Zombie", c_name="丧尸", category=Category.Devil, camp=Camp.Dark),
 
@@ -106,8 +113,10 @@ g_roles_repo = {
         Role(name="Shabaloth", c_name="暴食者", category=Category.Devil, camp=Camp.Dark),
         Role(name="Po", c_name="魄", category=Category.Devil, camp=Camp.Dark),
 
-        Role(name="Vigormortis", c_name="亡灵法师", category=Category.Devil, camp=Camp.Dark),
+        # Role(name="Vigormortis", c_name="亡灵法师", category=Category.Devil, camp=Camp.Dark),
         Role(name="FangGu", c_name="嗜梦游魂", category=Category.Devil, camp=Camp.Dark),
+        Role(name="Al-Hadikhia", c_name="血肉囚笼", category=Category.Devil, camp=Camp.Dark),
+        Role(name="Lleech", c_name="嗜脑魔", category=Category.Devil, camp=Camp.Dark),
 
     ]
 }
@@ -116,7 +125,7 @@ g_roles_repo_copy = copy.deepcopy(g_roles_repo)
 
 # g_must_have = ["WasherWoman", "Investigator", "Chef", "FortuneTeller", "Empath", "Drunk"]
 # g_must_have = ["Librarian", "Drunk"]
-g_must_have = ["Witch", "Pit-Hag", "FangGu"]
+g_must_have = ["Magician", "Farmer", "Professor", "Snitcher", "Lleech"]
 
 camp_division = {
     5: [3, 0, 1, 1],
@@ -452,14 +461,6 @@ def suggest_role(role_name, ind):
 
         suggestion += suggest_role(fake_townsman.name, ind)
 
-    elif role_name == "Marionette":
-        print("Drunk: available townsman: {}".format(g_roles_repo_copy[Category.Townsman]))
-        fake_townsman_index = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
-        fake_townsman = g_roles_repo_copy[Category.Townsman][fake_townsman_index]
-        suggestion = "你是{}  ".format(fake_townsman.c_name)
-
-        suggestion += suggest_role(fake_townsman.name, ind)
-
     elif role_name == "Lunatic":
         print("Lunatic: available devil: {}".format(g_roles_repo[Category.Devil]))
         fake_devil_index = randint(0, len(g_roles_repo[Category.Devil]) - 1)
@@ -486,11 +487,22 @@ def suggest_role(role_name, ind):
 
         suggestion += find_underlings(g_players_table, g_roles_repo)
 
-    elif role_name == "GodFather":
-        suggestion = ""
-        for an_index in g_players_table.index:
-            if is_category(g_players_table["Role"][an_index], Category.Outsider):
-                suggestion += "{} ".format(g_players_table["Role_Chinese"][an_index])
+    elif is_category(g_players_table["Role"][ind], Category.Underlings):
+        if role_name == "Marionette":
+            print("Drunk: available townsman: {}".format(g_roles_repo_copy[Category.Townsman]))
+            fake_townsman_index = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
+            fake_townsman = g_roles_repo_copy[Category.Townsman][fake_townsman_index]
+            suggestion = "你是{}  ".format(fake_townsman.c_name)
+
+            suggestion += suggest_role(fake_townsman.name, ind)
+
+        elif role_name == "GodFather":
+            suggestion = ""
+            for an_index in g_players_table.index:
+                if is_category(g_players_table["Role"][an_index], Category.Outsider):
+                    suggestion += "{} ".format(g_players_table["Role_Chinese"][an_index])
+
+        suggestion += handle_snitcher(g_players_table, g_roles_repo_copy, role_name)
 
     elif role_name == "LittleDevil":
         suggestion = "{} ".format(g_players_table["Role_Chinese"][ind])
@@ -567,11 +579,23 @@ def suggest_role(role_name, ind):
         suggestion += dummy(role_name, g_roles_repo_copy)
         suggestion += find_underlings(g_players_table, g_roles_repo)
 
-    elif role_name == "FangGu":
+    elif role_name == "FangGu" or role_name == "Al-Hadikhia" or role_name == "Lleech":
         suggestion = "{} ".format(g_players_table["Role_Chinese"][ind])
         suggestion += dummy(role_name, g_roles_repo_copy)
         suggestion += find_underlings(g_players_table, g_roles_repo)
 
+    return suggestion
+
+
+def handle_snitcher(g_players_table, g_roles_repo_copy, role_name):
+    suggestion = ""
+    has_snitcher = False
+    for an_index in g_players_table.index:
+        tmp = g_players_table["Role"][an_index]
+        if g_players_table["Role"][an_index] == "Snitcher":
+            has_snitcher = True
+    if has_snitcher:
+        suggestion = dummy(role_name, g_roles_repo_copy)
     return suggestion
 
 
