@@ -40,12 +40,12 @@ g_roles_repo = {
         Role(name="Librarian", c_name="图书管理员", category=Category.Townsman, camp=Camp.Light),
         Role(name="Investigator", c_name="调查员", category=Category.Townsman, camp=Camp.Light),
         # Role(name="Chef", c_name="厨师", category=Category.Townsman, camp=Camp.Light),
-        Role(name="Empath", c_name="共情者", category=Category.Townsman, camp=Camp.Light),
+        Role(name="Empath", c_name="神使", category=Category.Townsman, camp=Camp.Light),
         # Role(name="FortuneTeller", c_name="占卜师", category=Category.Townsman, camp=Camp.Light),
         Role(name="Undertaker", c_name="送葬者", category=Category.Townsman, camp=Camp.Light),
         # Role(name="Monk", c_name="僧侣", category=Category.Townsman, camp=Camp.Light),
         # Role(name="RavenKeeper", c_name="渡鸦看守者", category=Category.Townsman, camp=Camp.Light),
-        Role(name="Virgin", c_name="童真者", category=Category.Townsman, camp=Camp.Light),
+        Role(name="Virgin", c_name="圣女", category=Category.Townsman, camp=Camp.Light),
         Role(name="Slayer", c_name="杀手", category=Category.Townsman, camp=Camp.Light),
         Role(name="Soldier", c_name="士兵", category=Category.Townsman, camp=Camp.Light),
         # Role(name="Mayor", c_name="市长", category=Category.Townsman, camp=Camp.Light),
@@ -64,8 +64,14 @@ g_roles_repo = {
         Role(name="TeaLady", c_name="茶女", category=Category.Townsman, camp=Camp.Light),
         Role(name="Professor", c_name="教授", category=Category.Townsman, camp=Camp.Light),
 
-        Role(name="Farmer", c_name="农民", category=Category.Townsman, camp=Camp.Light),
-        Role(name="Magician", c_name="魔术师", category=Category.Townsman, camp=Camp.Light),
+        Role(name="Farmer", c_name="农夫", category=Category.Townsman, camp=Camp.Light),
+        # Role(name="Magician", c_name="魔术师", category=Category.Townsman, camp=Camp.Light),
+
+        # Role(name="Huntsman", c_name="巡山人", category=Category.Townsman, camp=Camp.Light),
+        Role(name="PoppyGrower", c_name="罂粟农", category=Category.Townsman, camp=Camp.Light),
+
+        # Role(name="Amnesiac", c_name="追忆者", category=Category.Townsman, camp=Camp.Light),
+
     ],
 
     Category.Outsider: [
@@ -81,17 +87,19 @@ g_roles_repo = {
 
         # Role(name="Heretic", c_name="异教徒", category=Category.Outsider, camp=Camp.Light),
 
-        Role(name="Snitcher", c_name="二五仔", category=Category.Outsider, camp=Camp.Light)
+        Role(name="Snitcher", c_name="告密者", category=Category.Outsider, camp=Camp.Light),
+
+# Role(name="Damsel", c_name="落难少女", category=Category.Outsider, camp=Camp.Light),
     ],
 
     Category.Underlings: [
-        Role(name="Poisoner", c_name="投毒者", category=Category.Underlings, camp=Camp.Dark),
+        Role(name="Poisoner", c_name="下毒者", category=Category.Underlings, camp=Camp.Dark),
         # Role(name="Spy", c_name="间谍", category=Category.Underlings, camp=Camp.Dark),
-        Role(name="ScarletWoman", c_name="荡妇", category=Category.Underlings, camp=Camp.Dark),
-        Role(name="Baron", c_name="男爵", category=Category.Underlings, camp=Camp.Dark),
+        Role(name="ScarletWoman", c_name="惺红女士", category=Category.Underlings, camp=Camp.Dark),
+        # Role(name="Baron", c_name="男爵", category=Category.Underlings, camp=Camp.Dark),
 
         # Role(name="EvilTwin", c_name="邪恶双子", category=Category.Underlings, camp=Camp.Dark),
-        Role(name="Pit-Hag", c_name="熬药巫婆", category=Category.Underlings, camp=Camp.Dark),
+        # Role(name="Pit-Hag", c_name="熬药巫婆", category=Category.Underlings, camp=Camp.Dark),
 
         Role(name="GodFather", c_name="教父", category=Category.Underlings, camp=Camp.Dark),
 
@@ -99,12 +107,12 @@ g_roles_repo = {
 
         Role(name="Psychopath", c_name="神经病", category=Category.Underlings, camp=Camp.Dark),
         Role(name="Mezepheles", c_name="灵言师", category=Category.Underlings, camp=Camp.Dark),
-        Role(name="Witch", c_name="巫师", category=Category.Underlings, camp=Camp.Dark),
+        Role(name="Witch", c_name="女巫", category=Category.Underlings, camp=Camp.Dark),
     ],
 
     Category.Devil: [
         Role(name="LittleDevil", c_name="小恶魔", category=Category.Devil, camp=Camp.Dark),
-        Role(name="Carrion", c_name="腐肢", category=Category.Devil, camp=Camp.Dark),
+        Role(name="Carrion", c_name="腐化邪神", category=Category.Devil, camp=Camp.Dark),
 
         # Role(name="Zombie", c_name="丧尸", category=Category.Devil, camp=Camp.Dark),
 
@@ -117,6 +125,7 @@ g_roles_repo = {
         Role(name="FangGu", c_name="嗜梦游魂", category=Category.Devil, camp=Camp.Dark),
         Role(name="Al-Hadikhia", c_name="血肉囚笼", category=Category.Devil, camp=Camp.Dark),
         Role(name="Lleech", c_name="嗜脑魔", category=Category.Devil, camp=Camp.Dark),
+        # Role(name="Riot", c_name="暴乱", category=Category.Devil, camp=Camp.Dark),
 
     ]
 }
@@ -125,7 +134,7 @@ g_roles_repo_copy = copy.deepcopy(g_roles_repo)
 
 # g_must_have = ["WasherWoman", "Investigator", "Chef", "FortuneTeller", "Empath", "Drunk"]
 # g_must_have = ["Librarian", "Drunk"]
-g_must_have = ["Magician", "Farmer", "Professor", "Snitcher", "Lleech"]
+g_must_have = ["Investigator", "Fool", "Slayer", "Soldier", "Psychopath", "Po"]
 
 camp_division = {
     5: [3, 0, 1, 1],
@@ -488,7 +497,11 @@ def suggest_role(role_name, ind):
         suggestion += find_underlings(g_players_table, g_roles_repo)
 
     elif is_category(g_players_table["Role"][ind], Category.Underlings):
-        if role_name == "Marionette":
+        if find_index_by_col(g_players_table, "Role", "Riot"):
+            g_players_table["Role"][ind] = "Riot"
+            g_players_table["Role_Chinese"][ind] = "暴乱"
+
+        elif role_name == "Marionette":
             print("Drunk: available townsman: {}".format(g_roles_repo_copy[Category.Townsman]))
             fake_townsman_index = randint(0, len(g_roles_repo_copy[Category.Townsman]) - 1)
             fake_townsman = g_roles_repo_copy[Category.Townsman][fake_townsman_index]
@@ -579,7 +592,7 @@ def suggest_role(role_name, ind):
         suggestion += dummy(role_name, g_roles_repo_copy)
         suggestion += find_underlings(g_players_table, g_roles_repo)
 
-    elif role_name == "FangGu" or role_name == "Al-Hadikhia" or role_name == "Lleech":
+    elif role_name == "FangGu" or role_name == "Al-Hadikhia" or role_name == "Lleech" or role_name == "Riot":
         suggestion = "{} ".format(g_players_table["Role_Chinese"][ind])
         suggestion += dummy(role_name, g_roles_repo_copy)
         suggestion += find_underlings(g_players_table, g_roles_repo)
